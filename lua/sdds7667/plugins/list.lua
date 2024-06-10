@@ -3,7 +3,7 @@ local plugins = {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.6",
         keys = {
-            "<leader>f"
+            "<leader>f", "<leader>th"
         },
         dependencies = {
             "nvim-lua/plenary.nvim"
@@ -46,9 +46,18 @@ local plugins = {
         config = function() require("sdds7667.plugins.lsp") end,
         dependencies = {
             { 'neovim/nvim-lspconfig' },
+            { 'hrsh7th/cmp-buffer' },
+            { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-nvim-lua' },
             { 'hrsh7th/nvim-cmp' },
-            { 'L3MON4D3/LuaSnip' },
+            {
+                'L3MON4D3/LuaSnip',
+                dependencies = { "rafamadriz/friendly-snippets" },
+                config = function ()
+                    require("sdds7667.plugins.lua_snip")
+                end
+            },
         },
     },
     {
@@ -150,24 +159,39 @@ local plugins = {
     {
         "akinsho/bufferline.nvim",
         dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function ()
-            require("bufferline").setup{}
+        config = function()
+            require("bufferline").setup {}
         end
 
     },
     {
         "kylechui/nvim-surround",
-        event = {"BufReadPost", "BufNewFile"},
-        version = "*" ,
+        event = { "BufReadPost", "BufNewFile" },
+        version = "*",
         config = true
     },
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
-        config = function ()
+        config = function()
             require("lualine").setup()
-            
         end
+    }, 
+    {
+        "github/copilot.vim",
+        enabled = true,
+        event = 'InsertEnter',
+        init = function()
+            vim.keymap.set('i', '<C-j>', 'copilot#Accept("\\<CR>")', {
+                expr = true,
+                replace_keycodes = false
+            })
+            vim.g.copilot_no_tab_map = true
+            vim.g.copilot_assume_mapped = true
+        end,
+        config = function()
+            vim.api.nvim_set_keymap("i", "<C-j>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+        end,
     }
 }
 local themes = require("sdds7667.plugins.themes")

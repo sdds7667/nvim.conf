@@ -26,6 +26,13 @@ cmp.setup({
             require('luasnip').lsp_expand(args.body)
         end,
     },
+    sources = {
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "buffer" },
+        { name = "nvim_lua" },
+        { name = "path" },
+    },
 })
 
 
@@ -51,8 +58,10 @@ lsp_zero.on_attach(function(client, bufnr)
     map("n", "<leader>re", "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename symbol")
     map("n", "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Show function signature")
     map("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Actions")
+    map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Actions")
     map("n", "<leader>fm", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", "Format File")
-    map("x", "<leader>fm", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", "Format File")
+    map("n", "<leader>lf", "<cmd>lua vim.diagnostic.open_float { border = \"rounded\" }<cr>", "Floating diagnostic")
+    
 end)
 
 -- here you can setup the language servers
