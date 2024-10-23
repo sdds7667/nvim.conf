@@ -54,7 +54,7 @@ local plugins = {
             {
                 'L3MON4D3/LuaSnip',
                 dependencies = { "rafamadriz/friendly-snippets" },
-                config = function ()
+                config = function()
                     require("sdds7667.plugins.lua_snip")
                 end
             },
@@ -106,11 +106,9 @@ local plugins = {
 
     {
         'numToStr/Comment.nvim',
+        event = "VeryLazy",
         opts = {
             -- add any options here
-        },
-        keys = {
-            "<leader>/",
         },
         config = function()
             local comment = require("Comment.api")
@@ -176,10 +174,10 @@ local plugins = {
         config = function()
             require("lualine").setup()
         end
-    }, 
+    },
     {
         "github/copilot.vim",
-        enabled = true,
+        enabled = false,
         event = 'InsertEnter',
         init = function()
             vim.keymap.set('i', '<C-j>', 'copilot#Accept("\\<CR>")', {
@@ -192,6 +190,31 @@ local plugins = {
         config = function()
             vim.api.nvim_set_keymap("i", "<C-j>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
         end,
+    },
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        },
+        config = function()
+            require("sdds7667.plugins.noice")
+        end
+    },
+
+    {
+        'https://gitlab.com/itaranto/preview.nvim',
+        version = '*',
+        config = function() require('preview').setup({
+        }) end,
     }
 }
 local themes = require("sdds7667.plugins.themes")

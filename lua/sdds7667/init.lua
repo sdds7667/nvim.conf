@@ -4,4 +4,4 @@ require("sdds7667.lazy")
 require("sdds7667.plugins")
 require("sdds7667.vim")
 
-vim.cmd.colorscheme("catppuccin-macchiato")
+vim.cmd.colorscheme("github_dark")

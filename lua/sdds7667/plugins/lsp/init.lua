@@ -1,6 +1,7 @@
 local lsp_zero = require('lsp-zero')
 local server = require("lsp-zero.server")
 lsp_zero.extend_lspconfig()
+local lsp_config = require("lspconfig")
 
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
@@ -57,16 +58,15 @@ lsp_zero.on_attach(function(client, bufnr)
 
     map("n", "<leader>re", "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename symbol")
     map("n", "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Show function signature")
+    map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Show function signature")
     map("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Actions")
     map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Actions")
     map("n", "<leader>fm", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", "Format File")
     map("n", "<leader>lf", "<cmd>lua vim.diagnostic.open_float { border = \"rounded\" }<cr>", "Floating diagnostic")
-    
 end)
 
 -- here you can setup the language servers
-lsp_zero.setup_servers({ 'rust_analyzer', "clangd", "svelte", "tsserver" })
-
+lsp_zero.setup_servers({ 'rust_analyzer', "clangd", "svelte", "tsserver", "pyright", "tailwindcss" })
 
 server.setup("lua_ls", {
     settings = {
@@ -86,3 +86,16 @@ server.setup("lua_ls", {
         },
     },
 });
+
+server.setup("zls", {
+    default_config = {
+        cmd = { "~/.local/share/nvim/mason/bin/zls" },
+        filetypes = { "zig" },
+        root_dir = lsp_config.util.root_pattern("build.zig", ".git")
+    },
+    docs = {
+        description = [[ ]],
+        default_config = [[ root_pattern("build.zig", ".git") ]]
+    }
+})
+vim.g.zig_fmt_autosave = 0
