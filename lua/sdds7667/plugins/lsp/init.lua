@@ -66,7 +66,7 @@ lsp_zero.on_attach(function(client, bufnr)
 end)
 
 -- here you can setup the language servers
-lsp_zero.setup_servers({ 'rust_analyzer', "clangd", "svelte", "tsserver", "pyright", "tailwindcss" })
+lsp_zero.setup_servers({ 'rust_analyzer', "clangd", "svelte", "ts_ls", "pyright", "tailwindcss" })
 
 server.setup("lua_ls", {
     settings = {
